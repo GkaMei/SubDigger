@@ -29,8 +29,3 @@ def get_subdomains(domain):
                     subdomains.add(name_value.strip())
 
     return json.dumps({"domain": domain, "subdomains": list(subdomains)}, indent=4)
-
-# if __name__ == "__main__":
-#     domain = "qq.com"
-#     result = get_subdomains(domain)
-#     print(result)

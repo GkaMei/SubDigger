@@ -1,26 +1,21 @@
 import subprocess
-import os
-import re
 import json
+import re
+import os
 
-def execute_command(domain):
+TOOLS_DIR = os.path.abspath("tools")
+
+def execute_command(command):
     try:
-        # 确保使用绝对路径
-        ksubdomain_path = os.path.abspath("iniFile/ksubdomian/ksubdomain")
-        
         # 执行命令并捕获输出
-        result = subprocess.run([ksubdomain_path, "-d", domain], capture_output=True, text=True, check=True)
-        
-        # 处理并提取有用信息
-        output = result.stdout
-        return extract_useful_info(output)
-    
+        result = subprocess.run(command, capture_output=True, text=True, check=True, shell=True)
+        return result.stdout
     except subprocess.CalledProcessError as e:
-        return json.dumps({"error": f"请root启动,错误输出: {e.stderr}"}, ensure_ascii=False, indent=4)
+        return f"命令执行错误: {e.stderr}"
     except FileNotFoundError:
-        return json.dumps({"error": f"命令未找到。请确保 '{ksubdomain_path}' 已安装并在您的 PATH 中。"}, ensure_ascii=False, indent=4)
+        return f"命令未找到。请确保命令已安装并在您的 PATH 中。"
     except Exception as e:
-        return json.dumps({"error": f"执行命令时发生错误: {e}"}, ensure_ascii=False, indent=4)
+        return f"执行命令时发生错误: {e}"
 
 def extract_useful_info(output):
     # 提取域名解析路径
@@ -28,9 +23,40 @@ def extract_useful_info(output):
     domain_matches = domain_pattern.findall(output)
     
     if domain_matches:
-        domain_info = domain_matches
+        return [match.split(" => ")[0] for match in domain_matches]  # 返回提取的子域名
     else:
-        domain_info = ["未找到域名解析路径"]
+        return []  # 返回空列表表示未找到
+
+def get_subdomains(domain):
+    # 使用 subfinder 进行被动子域名发现
+    subfinder_command = f"{os.path.join(TOOLS_DIR, 'subfinder', 'subfinder')} -d {domain} -silent"
+    subfinder_output = execute_command(subfinder_command)
     
-    # 返回 JSON 格式的结果
-    return json.dumps({"domain_info": domain_info}, ensure_ascii=False, indent=4)
+    # 使用 assetfinder 进行被动子域名发现
+    assetfinder_command = f"{os.path.join(TOOLS_DIR, 'assetfinder', 'assetfinder')} --subs-only {domain}"
+    assetfinder_output = execute_command(assetfinder_command)
+    
+    # 使用 findomain 进行主动子域名发现
+    findomain_command = f"{os.path.join(TOOLS_DIR, 'findomain', 'findomain')} -t {domain} -q"
+    findomain_output = execute_command(findomain_command)
+
+    # ksubdomain 进行主动子域名发现
+    ksubdomain_command = f"{os.path.join(TOOLS_DIR, 'ksubdomain', 'ksubdomain')} -d {domain}"
+    output = execute_command(ksubdomain_command)
+    ksubdomain_output = extract_useful_info(output)
+
+    # 合并结果并去重
+    all_subdomains = set(
+        (subfinder_output.splitlines() if subfinder_output else []) +
+        (assetfinder_output.splitlines() if assetfinder_output else []) +
+        (findomain_output.splitlines() if findomain_output else []) +
+        ksubdomain_output
+    )
+    
+    # JSON 输出
+    output_data = {
+        "domain": domain,
+        "subdomains": list(all_subdomains)
+    }
+    
+    return json.dumps(output_data, ensure_ascii=False, indent=4)
