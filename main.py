@@ -30,7 +30,7 @@ def get_subdomains(domain):
             executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
             executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
             executor.submit(dig.get_subdomains, domain): 'dig',
-            # executor.submit(ksubdomain.execute_command, domain): 'ksubdomain'
+            executor.submit(ksubdomain.execute_command, domain): 'ksubdomain'
         }
         
         results = {}
