@@ -6,8 +6,8 @@ import Plugins.domain.dig as dig
 import Plugins.domain.quake as quake 
 import Plugins.domain.threatbook as threatbook
 import Plugins.domain.google_search as google_search
+import Plugins.domain.httpx as httpx
 import Plugins.ResultToFile.result_to_file as result_to_file
-import Plugins.ResultToFile.export_report as export_report
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
@@ -62,8 +62,8 @@ def main():
     domain = input("请输入域名:")
     if check_domain(domain):
         results = get_subdomains(domain)
-        result_to_file.save_result_to_file(results)
-        # export_report.extract_domains_to_file(results)
+        httpx_results = httpx.process_domains(results)
+        result_to_file.save_result_to_file(httpx_results)
 
 
 if __name__ == '__main__':
