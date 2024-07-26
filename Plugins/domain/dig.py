@@ -68,7 +68,7 @@ def get_subdomains(domain):
             logging.info(f"域传送失败或没有返回数据，尝试下一个NS服务器。")
 
     if all_subdomains:
-        return json.dumps({"domain": domain, "subdomains": list(all_subdomains)}, indent=4)
+        return list(all_subdomains)
     else:
         logging.info("未能成功进行域传送，未提取到子域名。")
-        return json.dumps({"domain": domain, "subdomains": []}, indent=4)
+        return None

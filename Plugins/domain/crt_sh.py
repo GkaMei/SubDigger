@@ -28,4 +28,4 @@ def get_subdomains(domain):
                 if name_value.endswith(domain):
                     subdomains.add(name_value.strip())
 
-    return json.dumps({"domain": domain, "subdomains": list(subdomains)}, indent=4)
+    return list(subdomains)

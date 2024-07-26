@@ -52,11 +52,5 @@ def get_subdomains(domain):
         (findomain_output.splitlines() if findomain_output else []) +
         ksubdomain_output
     )
-    
-    # JSON 输出
-    output_data = {
-        "domain": domain,
-        "subdomains": list(all_subdomains)
-    }
-    
-    return json.dumps(output_data, ensure_ascii=False, indent=4)
+
+    return list(all_subdomains)

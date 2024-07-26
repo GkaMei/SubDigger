@@ -29,7 +29,7 @@ def get_subdomains(domain):
         except requests.RequestException as e:
             print(f"请求失败: {e}")
             break
-    return json.dumps(list(subdomains), ensure_ascii=False, indent=4)
+    return list(subdomains)
 
 def parse_results(html, domain):
     soup = BeautifulSoup(html, 'html.parser')
