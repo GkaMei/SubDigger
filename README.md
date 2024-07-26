@@ -1,50 +1,49 @@
-# 项目目标：全面的子域名收集
+# SubDigger
 
-本项目旨在通过多种方法集成，实现对特定域名的全面子域名收集。子域名收集是网络安全、渗透测试和信息收集中的重要环节，能够帮助安全专家和研究人员识别潜在的攻击面和安全风险。
+👊 **SubDigger一款强大的子域收集工具**
 
-## 0x01 利用 DNS 数据集收集子域
+## 🎉 项目简介
 
-- **ip138**: [https://site.ip138.com/](https://site.ip138.com/)
+在渗透测试中，信息收集至关重要，而子域收集是其中不可或缺的一部分。尽管市面上有许多开源的子域收集工具，但它们普遍存在以下问题：
 
-## 0x02 基于 SSL 证书查询
+- **功能不足**：许多工具的接口有限，无法实现批量子域的自动收集，缺乏自动解析、验证、模糊查询及信息扩展等功能。
+- **用户体验差**：虽然命令行工具方便，但在参数众多、操作复杂时，使用体验不佳。一个友好的前端界面将大大提升用户体验。
+- **缺乏维护**：许多工具长时间未更新，缺乏对问题的响应和修复。
+- **效率低下**：未充分利用多进程、多线程和异步协程技术，导致速度较慢。
 
-- **crtsh**: [https://crt.sh/](https://crt.sh/)
-- **Facebook**: [https://developers.facebook.com/tools/ct](https://developers.facebook.com/tools/ct)
-- **Entrust**: [https://www.entrust.com/ct-search/](https://www.entrust.com/ct-search/)
+## 👍 功能特性
 
-## 0x03 利用搜索引擎发现子域
+- **强大的收集能力**
+  1. **证书透明度收集**：支持6个模块（`censys_api`，`certspotter`，`crtsh`，`entrust`，`google`，`spyse_api`）。
+  2. **常规检查收集**：支持多种检查方法，包括域传送漏洞（`axfr`）、跨域策略文件（`cdx`）、HTTPS证书（`cert`）、内容安全策略（`csp`）、robots文件（`robots`）、sitemap文件（`sitemap`）及NSEC记录遍历（`dnssec`）。
+  3. **爬虫档案收集**：目前有2个模块（`archivecrawl`，`commoncrawl`），该模块仍在调试中。
+  4. **DNS数据集收集**：支持24个模块，包括`bevigil_api`、`binaryedge_api`、`bufferover`等。
+  5. **DNS查询收集**：通过查询SRV记录及其他DNS记录（MX, NS, SOA, TXT）收集子域。
+  6. **威胁情报平台数据收集**：支持6个模块（`alienvault`，`riskiq_api`，`threatbook_api`等），该模块待完善。
+  7. **搜索引擎发现子域**：支持18个模块，包括`ask`、`baidu`、`bing`、`google`等，支持自动排除、全量搜索和递归搜索。
 
-- **Google**
-- **Baidu**
-- **Bing**
+- **子域爆破**：支持常规字典爆破和自定义模糊查询，支持批量和递归爆破，并自动处理泛解析。
 
-## 0x04 网络空间搜索引擎
+- **子域验证**：默认开启，自动解析DNS并请求子域以获取标题和横幅，综合判断子域存活情况。
 
-- **FOFA**: [https://fofa.info/](https://fofa.info/)
-  - 子域名查询语法：`domain:xxx.com`
-- **ZoomEye**: [https://www.zoomeye.org/](https://www.zoomeye.org/)
-  - 子域名查询语法：`site:xxx.com`
-- **Shodan**: [https://www.shodan.io/](https://www.shodan.io/)
-  - 子域名查询语法：`hostname:xxx.com`
-- **Quake**: [https://quake.360.cn/quake/#/index](https://quake.360.cn/quake/#/index)
-  - 子域名查询语法：`domain:"xxx.com"`
+- **子域爬取**：根据已有子域请求响应体及JS，从中发现新子域。
 
-## 0x05 利用威胁情报平台数据收集子域
+- **子域置换**：利用已有子域进行替换，发现新子域。
 
-- **微步**: [https://x.threatbook.cn/](https://x.threatbook.cn/)
-- **AlienVault**: [https://otx.alienvault.com/](https://otx.alienvault.com/)
-- **RiskIQ**: [https://www.riskiq.com/](https://www.riskiq.com/)
-- **ThreatMiner**: [https://www.threatminer.org/](https://www.threatminer.org/)
-- **VirusTotal**: [https://www.virustotal.com/gui/home/search](https://www.virustotal.com/gui/home/search)
+- **子域接管**：默认开启接管风险检查，支持自动接管（目前仅限Github，待完善）和批量检查。
 
-## 0x06 域名备案搜集
+- **强大的处理功能**：支持自动去重、DNS解析、HTTP请求探测，筛选有效子域并扩展横幅信息，支持导出为`txt`、`csv`、`json`格式。
 
-- [http://www.beian.gov.cn/](http://www.beian.gov.cn/)
-- [https://beian.miit.gov.cn/](https://beian.miit.gov.cn/)
-- [http://icp.chinaz.com/](http://icp.chinaz.com/)
+- **极快的速度**：收集模块使用多线程，爆破模块使用massdns，DNS解析速度可达每秒350,000个域名，子域验证中使用异步多协程和多线程。
 
-## 0x07 主动信息收集
+- **良好的用户体验**：各模块均有进度条，异步保存结果。
 
-- **OneForAll**
-- **SubdomainBrute**
-- **ESD**
+如果您有其他优秀的想法，请随时告诉我！😎
+
+## 🙏 贡献
+
+欢迎各位开发者共同完善本项目！
+
+## 📜 免责声明
+
+本工具仅限于在获得合法授权的企业安全建设中使用。使用本工具时，您应确保遵守当地法律法规。如因使用本工具而产生任何非法行为，您将自行承担后果，所有开发者和贡献者不承担任何法律责任。请在充分阅读、理解并接受本协议条款后再进行安装和使用。您的使用行为即视为您已阅读并同意本协议的约束。

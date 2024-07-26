@@ -13,6 +13,8 @@ def extract_domains_to_file(result):
             unique_domains.update(domains)
 
     result =  list(unique_domains)  # 转换为列表返回
+    #对result中的每一个域名都进行httpx扫描
+    
     # 获取当前时间戳
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     
