@@ -1,0 +1,7 @@
+aiodns
+asyncio
+beautifulsoup4
+dns
+json
+logging
+requests
