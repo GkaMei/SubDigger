@@ -20,7 +20,7 @@
 
 ## 0x04 网络空间搜索引擎
 
-- **FOFA**: [https://fofa.so/](https://fofa.so/)
+- **FOFA**: [https://fofa.info/](https://fofa.info/)
   - 子域名查询语法：`domain:xxx.com`
 - **ZoomEye**: [https://www.zoomeye.org/](https://www.zoomeye.org/)
   - 子域名查询语法：`site:xxx.com`
