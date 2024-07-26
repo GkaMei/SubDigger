@@ -7,6 +7,7 @@ import Plugins.domain.quake as quake
 import Plugins.domain.threatbook as threatbook
 import Plugins.domain.google_search as google_search
 import Plugins.ResultToFile.result_to_file as result_to_file
+import Plugins.ResultToFile.export_report as export_report
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
@@ -62,6 +63,7 @@ def main():
     if check_domain(domain):
         results = get_subdomains(domain)
         result_to_file.save_result_to_file(results)
+        # export_report.extract_domains_to_file(results)
 
 
 if __name__ == '__main__':
