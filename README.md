@@ -1,6 +1,6 @@
 # SubDigger
 
-👊 **SubDigger一款强大的子域收集工具**
+👊 **SubDigger** 是一款强大的子域收集工具
 
 ## 🎉 项目简介
 
@@ -13,22 +13,31 @@
 
 ## 👍 功能特性
 
-- **强大的收集能力**
-  1. **证书透明度收集**：支持`crtsh`、`spyse_api`。
-  2. **常规检查收集**：支持多种检查方法，包括域传送漏洞（`axfr`）、跨域策略文件（`cdx`）、HTTPS证书（`cert`）、内容安全策略（`csp`）、robots文件（`robots`）、sitemap文件（`sitemap`）及NSEC记录遍历（`dnssec`）。
-  3. **爬虫档案收集**：目前有2个模块（`archivecrawl`，`commoncrawl`）。
-  4. **DNS数据集收集**：支持`bevigil_api`、`binaryedge_api`、`bufferover`等。
-  5. **DNS查询收集**：通过查询SRV记录及其他DNS记录（MX, NS, SOA, TXT）收集子域。
-  6. **威胁情报平台数据收集**：支持`threatbook_api`模块。
-  7. **搜索引擎发现子域**：支持`bing`、`google`全量搜索。
+### 强大的被动收集能力
 
-- **子域验证**：默认开启，自动解析DNS并请求子域以获取标题和横幅，综合判断子域存活情况。
+1. **证书透明度收集**：支持 `crtsh`、`spyse_api`。
+2. **常规检查收集**：支持多种检查方法，包括：
+   - 域传送漏洞（`axfr`）
+   - 跨域策略文件（`cdx`）
+   - HTTPS证书（`cert`）
+   - 内容安全策略（`csp`）
+   - robots 文件（`robots`）
+   - sitemap 文件（`sitemap`）
+   - NSEC 记录遍历（`dnssec`）
+3. **爬虫档案收集**：支持`archivecrawl`，`commoncrawl`。
+4. **DNS 数据集收集**：支持 `bevigil_api`、`binaryedge_api`、`chaziyu` 等。
+5. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
+6. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
+7. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
 
-- **子域爬取**：根据已有子域请求响应体及JS，从中发现新子域。
+### 强大的主动收集能力
 
-- **子域爆破**：字典爆破模块使用massdns，DNS解析速度可达每秒350,000个域名，子域验证中使用异步多协程和多线程。
+1. **子域爬取**：根据已有子域请求响应体及 JS，从中发现新子域。
+2. **子域爆破**：字典爆破模块使用 `ksubdomain`，DNS 解析速度极快且更准确。
 
-- **强大的处理功能**：支持自动去重、DNS解析、HTTP请求探测，筛选有效子域并扩展横幅信息，支持导出为`json`格式。
+### 强大的数据处理功能
+
+- 支持自动去重，筛选有效子域并使用`httpx`扩展域名、ip信息，结果导出为 `json` 格式。
 
 如果您有其他优秀的想法，请随时告诉我！😎
 

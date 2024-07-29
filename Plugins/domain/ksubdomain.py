@@ -29,19 +29,24 @@ def extract_useful_info(output):
 
 def get_subdomains(domain):
     # 使用 subfinder 进行被动子域名发现
-    subfinder_command = f"{os.path.join(TOOLS_DIR, 'subfinder', 'subfinder')} -d {domain} -silent"
+    subfinder_command = [os.path.join(TOOLS_DIR, 'subfinder', 'subfinder'), '-d', domain, '-silent']
     subfinder_output = execute_command(subfinder_command)
     
     # 使用 assetfinder 进行被动子域名发现
-    assetfinder_command = f"{os.path.join(TOOLS_DIR, 'assetfinder', 'assetfinder')} --subs-only {domain}"
+    assetfinder_command = [os.path.join(TOOLS_DIR, 'assetfinder', 'assetfinder'), '--subs-only', domain]
     assetfinder_output = execute_command(assetfinder_command)
     
     # 使用 findomain 进行主动子域名发现
-    findomain_command = f"{os.path.join(TOOLS_DIR, 'findomain', 'findomain')} -t {domain} -q"
+    findomain_command = [os.path.join(TOOLS_DIR, 'findomain', 'findomain'), '-t', domain, '-q']
     findomain_output = execute_command(findomain_command)
 
     # ksubdomain 进行主动子域名发现
-    ksubdomain_command = f"{os.path.join(TOOLS_DIR, 'ksubdomain', 'ksubdomain')} -d {domain}"
+    ksubdomain_command = [
+        os.path.join(TOOLS_DIR, 'ksubdomain', 'ksubdomain'),
+        '-d', domain,
+        '-f', os.path.join(TOOLS_DIR, "passwd", "Subdomain.txt"),
+        '-full'
+    ]
     output = execute_command(ksubdomain_command)
     ksubdomain_output = extract_useful_info(output)
 
