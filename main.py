@@ -36,13 +36,13 @@ def get_subdomains(domain):
         # 提交任务到线程池
         futures = {
             # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',  # 基于SSL证书查询
-            # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api', #使用前需注册并配置API Key(https://bevigil.com/osint/api-keys)
-            # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',  # IP38收集子域名
+            # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',  # "chaziyu.com"收集子域名
             # executor.submit(google_search.get_subdomains, domain): 'google_search',  # 使用谷歌语法收集子域名
+            # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api', #使用前需注册并配置API Key(https://bevigil.com/osint/api-keys)
             # executor.submit(quake.get_subdomains, domain): 'quake',  # 360 Quake网络空间搜索引擎（使用前需注册并配置API Key）
             # executor.submit(threatbook.get_subdomains, domain): 'threatbook',  # threatbook威胁情报平台（使用前需注册并配置API Key）
             # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
-            # executor.submit(dig.get_subdomains, domain): 'dig',  # 测试域传送是否存在
+            # executor.submit(dig.get_subdomains, domain): 'dig',  # 域传送漏洞（axfr）
             # executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',  # 主动/爆破子域名（需以root权限启动）
         }
         
