@@ -6,6 +6,7 @@ import Plugins.domain.dig as dig
 import Plugins.domain.quake as quake 
 import Plugins.domain.threatbook as threatbook
 import Plugins.domain.google_search as google_search
+import Plugins.domain.js_finder as js_finder
 import Plugins.domain.httpx as httpx
 import Plugins.ResultToFile.result_to_file as result_to_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -33,11 +34,12 @@ def get_subdomains(domain):
     with ThreadPoolExecutor() as executor:
         # 提交任务到线程池
         futures = {
-            executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',  # 基于SSL证书查询
+            # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',  # 基于SSL证书查询
             # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',  # IP38收集子域名
             # executor.submit(google_search.get_subdomains, domain): 'google_search',  # 使用谷歌语法收集子域名
             # executor.submit(quake.get_subdomains, domain): 'quake',  # 360 Quake网络空间搜索引擎（使用前需注册并配置API Key）
             # executor.submit(threatbook.get_subdomains, domain): 'threatbook',  # threatbook威胁情报平台（使用前需注册并配置API Key）
+            # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
             # executor.submit(dig.get_subdomains, domain): 'dig',  # 测试域传送是否存在
             # executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',  # 主动/爆破子域名（需以root权限启动）
         }
