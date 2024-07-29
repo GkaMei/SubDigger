@@ -24,8 +24,8 @@
    - robots 文件（`robots`）
    - sitemap 文件（`sitemap`）
    - NSEC 记录遍历（`dnssec`）
-3. **爬虫档案收集**：支持`archivecrawl`，`commoncrawl`。
-4. **DNS 数据集收集**：支持 `bevigil_api`、`binaryedge_api`、`chaziyu` 等。
+3. **爬虫收集**：支持`archivecrawl`，`commoncrawl`。
+4. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
 5. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
 6. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
 7. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
