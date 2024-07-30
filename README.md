@@ -48,3 +48,7 @@
 ## 📜 免责声明
 
 本工具仅限于在获得合法授权的企业安全建设中使用。使用本工具时，您应确保遵守当地法律法规。如因使用本工具而产生任何非法行为，您将自行承担后果，所有开发者和贡献者不承担任何法律责任。请在充分阅读、理解并接受本协议条款后再进行安装和使用。您的使用行为即视为您已阅读并同意本协议的约束。
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=GkaMei/SubDigger&type=Date)](https://star-history.com/#GkaMei/SubDigger&Date)
