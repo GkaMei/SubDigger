@@ -15,7 +15,7 @@ def get_subdomains(domain):
 
         # 检查响应代码
         if data.get("response_code") != 0:
-            print(f"API 返回错误: {data.get('verbose_msg')}")
+            print(f"threatbook API 返回错误: {data.get('verbose_msg')}")
             return []
 
         # 提取子域名

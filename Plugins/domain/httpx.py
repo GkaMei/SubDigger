@@ -26,10 +26,16 @@ def process_domains(result):
     """处理域名列表，使用多线程扫描每个域名，并收集结果。"""
     unique_domains = set()
 
+    # 收集去重后的域名
     for key, domains in result.items():
         if domains is not None and isinstance(domains, list):
             unique_domains.update(domains)
+    
+    # 如果去重后的域名数量超过 20，提前返回
+    if len(unique_domains) > 20:
+        return list(unique_domains)
 
+    # 否则，继续执行 httpx 扫描
     httpx_results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = {executor.submit(scan_domain, domain): domain for domain in unique_domains}

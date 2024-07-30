@@ -41,14 +41,14 @@ def get_subdomains(domain, mode='passive'):
         
         if mode == 'passive':
             futures = {
-                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
-                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
-                executor.submit(google_search.get_subdomains, domain): 'google_search',
-                executor.submit(censys_api.get_subdomains, domain): 'censys_api',
-                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
-                executor.submit(quake.get_subdomains, domain): 'quake',
-                executor.submit(threatbook.get_subdomains, domain): 'threatbook',
-                executor.submit(dig.get_subdomains, domain): 'dig',
+                # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
+                # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
+                # executor.submit(google_search.get_subdomains, domain): 'google_search',
+                # executor.submit(censys_api.get_subdomains, domain): 'censys_api',
+                # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
+                # executor.submit(quake.get_subdomains, domain): 'quake',
+                # executor.submit(threatbook.get_subdomains, domain): 'threatbook',
+                # executor.submit(dig.get_subdomains, domain): 'dig',
                 executor.submit(js_finder.get_subdomains, domain): 'js_finder',
             }
         elif mode == 'active':

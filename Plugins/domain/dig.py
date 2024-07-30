@@ -30,10 +30,8 @@ def perform_zone_transfer(ns_server, domain, timeout=5):
             logging.warning(f"域传送失败，返回码: {result.returncode}")
             return ""
     except subprocess.TimeoutExpired:
-        logging.error("域传送超时")
         return ""
     except Exception as e:
-        logging.error(f"执行域传送时发生错误: {e}")
         return ""
 
 def extract_subdomains(zone_data):

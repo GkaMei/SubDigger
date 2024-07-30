@@ -95,7 +95,7 @@ def find_subdomain(urls, mainurl):
 def find_by_url(url):
     html_raw = extract_html(url)
     if html_raw is None:
-        print("无法访问 " + url)
+        print("js_finder插件无法访问,请完善格式为http://xxx.com " + url)
         return None
     html = BeautifulSoup(html_raw, "html.parser")
     html_scripts = html.findAll("script")
