@@ -8,6 +8,7 @@ import Plugins.domain.threatbook as threatbook
 import Plugins.domain.google_search as google_search
 import Plugins.domain.js_finder as js_finder
 import Plugins.domain.bevigil_api as bevigil_api
+import Plugins.domain.censys_api as censys_api
 import Plugins.domain.httpx as httpx
 import Plugins.ResultToFile.result_to_file as result_to_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -38,6 +39,7 @@ def get_subdomains(domain):
             # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',  # 基于SSL证书查询
             # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',  # "chaziyu.com"收集子域名
             # executor.submit(google_search.get_subdomains, domain): 'google_search',  # 使用谷歌语法收集子域名
+            executor.submit(censys_api.get_subdomains, domain): 'censys_api', #使用前需注册并配置API Key(https://search.censys.io/account/api)
             # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api', #使用前需注册并配置API Key(https://bevigil.com/osint/api-keys)
             # executor.submit(quake.get_subdomains, domain): 'quake',  # 360 Quake网络空间搜索引擎（使用前需注册并配置API Key）
             # executor.submit(threatbook.get_subdomains, domain): 'threatbook',  # threatbook威胁情报平台（使用前需注册并配置API Key）
@@ -66,8 +68,8 @@ def main():
     domain = input("请输入域名:")
     if check_domain(domain):
         results = get_subdomains(domain)
-        httpx_results = httpx.process_domains(results)
-        result_to_file.save_result_to_file(httpx_results)
+        # httpx_results = httpx.process_domains(results)
+        result_to_file.save_result_to_file(results)
 
 
 if __name__ == '__main__':
