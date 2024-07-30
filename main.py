@@ -1,3 +1,4 @@
+import argparse
 import Plugins.domain.check_url as check_url
 import Plugins.domain.crt_sh as crt_sh
 import Plugins.domain.ksubdomain as ksubdomain
@@ -28,28 +29,37 @@ def check_domain(domain):
         return True
 
 
-def get_subdomains(domain):
+def get_subdomains(domain, mode='passive'):
     """
-    并行获取子域名。
+    根据模式获取子域名。
+    :param domain: 要检查的域名
+    :param mode: 'passive' 或 'active'，指定获取方式
     :return: 包含各个服务结果的字典
     """
     with ThreadPoolExecutor() as executor:
-        # 提交任务到线程池
-        futures = {
-            # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',  # 基于SSL证书查询
-            # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',  # "chaziyu.com"收集子域名
-            # executor.submit(google_search.get_subdomains, domain): 'google_search',  # 使用谷歌语法收集子域名
-            executor.submit(censys_api.get_subdomains, domain): 'censys_api', #使用前需注册并配置API Key(https://search.censys.io/account/api)
-            # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api', #使用前需注册并配置API Key(https://bevigil.com/osint/api-keys)
-            # executor.submit(quake.get_subdomains, domain): 'quake',  # 360 Quake网络空间搜索引擎（使用前需注册并配置API Key）
-            # executor.submit(threatbook.get_subdomains, domain): 'threatbook',  # threatbook威胁情报平台（使用前需注册并配置API Key）
-            # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
-            # executor.submit(dig.get_subdomains, domain): 'dig',  # 域传送漏洞（axfr）
-            # executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',  # 主动/爆破子域名（需以root权限启动）
-        }
+        futures = {}
         
+        if mode == 'passive':
+            futures = {
+                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
+                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
+                executor.submit(google_search.get_subdomains, domain): 'google_search',
+                executor.submit(censys_api.get_subdomains, domain): 'censys_api',
+                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
+                executor.submit(quake.get_subdomains, domain): 'quake',
+                executor.submit(threatbook.get_subdomains, domain): 'threatbook',
+                executor.submit(dig.get_subdomains, domain): 'dig',
+                executor.submit(js_finder.get_subdomains, domain): 'js_finder',
+            }
+        elif mode == 'active':
+            futures = {
+                executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
+            }
+        else:
+            print("请选择一种扫描的方式 'passive' 或 'active'")
+            return {}
+
         results = {}
-        # 迭代完成的任务
         for future in as_completed(futures):
             service_name = futures[future]
             try:
@@ -65,11 +75,20 @@ def main():
     """
     主函数，获取用户输入的域名并执行子域名获取和保存操作。
     """
-    domain = input("请输入域名:")
+    parser = argparse.ArgumentParser(description='强大的子域收集工具')
+    parser.add_argument('-mode', choices=['active', 'passive'], required=True, help='请选择主动扫描或者被动扫描: active 或 passive')
+    parser.add_argument('domain', help='要扫描的域名')
+    
+    args = parser.parse_args()
+    
+    domain = args.domain
+    mode = args.mode
+    
     if check_domain(domain):
-        results = get_subdomains(domain)
-        # httpx_results = httpx.process_domains(results)
-        result_to_file.save_result_to_file(results)
+        results = get_subdomains(domain, mode=mode)
+        
+        httpx_results = httpx.process_domains(results)
+        result_to_file.save_result_to_file(httpx_results)
 
 
 if __name__ == '__main__':
