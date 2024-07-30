@@ -39,12 +39,19 @@ def extract_URL(JS):
 
 # 提取 HTML 内容
 def extract_html(URL):
-    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36"}
+    header = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36"
+    }
     try:
+        # 确保 URL 以 http:// 或 https:// 开头
+        if not URL.startswith(('http://', 'https://')):
+            URL = 'http://' + URL
+        
         raw = requests.get(URL, headers=header, timeout=3, verify=False)
         raw = raw.content.decode("utf-8", "ignore")
         return raw
-    except:
+    except requests.exceptions.RequestException as e:
+        print(f"请求错误: {e}")
         return None
 
 # 处理 URL，生成绝对 URL
@@ -95,7 +102,7 @@ def find_subdomain(urls, mainurl):
 def find_by_url(url):
     html_raw = extract_html(url)
     if html_raw is None:
-        print("js_finder插件无法访问,请完善格式为http://xxx.com " + url)
+        print("域名构造失败")
         return None
     html = BeautifulSoup(html_raw, "html.parser")
     html_scripts = html.findAll("script")

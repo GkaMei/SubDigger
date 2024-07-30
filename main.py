@@ -31,9 +31,8 @@ def check_domain(domain):
 
 def get_subdomains(domain, mode='passive'):
     """
-    根据模式获取子域名。
     :param domain: 要检查的域名
-    :param mode: 'passive' 或 'active'，指定获取方式
+    :param mode: 'passive' 或 'active'，根据模式获取子域名。
     :return: 包含各个服务结果的字典
     """
     with ThreadPoolExecutor() as executor:
