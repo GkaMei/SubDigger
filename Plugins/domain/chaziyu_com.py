@@ -21,10 +21,7 @@ def get_subdomains(domain):
 
     if response.status_code == 200:
         try:
-            # 假设子域名在响应内容中以某种模式出现
-            # 这里使用正则表达式来提取子域名
             subdomains = re.findall(rf'\b(?:[a-zA-Z0-9-]+\.)*{re.escape(domain)}\b', response.text)
-            # return json.dumps({"subdomains": subdomains}, ensure_ascii=False, indent=4)
             return list(subdomains)
         except Exception as e:
             return json.dumps({"error": f"解析错误: {e}"}, ensure_ascii=False, indent=4)
