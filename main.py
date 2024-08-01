@@ -11,6 +11,7 @@ import Plugins.domain.js_finder as js_finder
 import Plugins.domain.bevigil_api as bevigil_api
 import Plugins.domain.censys_api as censys_api
 import Plugins.domain.httpx as httpx
+import Plugins.domain.dns_search as dns_search
 import Plugins.ResultToFile.result_to_file as result_to_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -48,7 +49,8 @@ def get_subdomains(domain, mode='passive'):
                 # executor.submit(quake.get_subdomains, domain): 'quake',
                 # executor.submit(threatbook.get_subdomains, domain): 'threatbook',
                 # executor.submit(dig.get_subdomains, domain): 'dig',
-                executor.submit(js_finder.get_subdomains, domain): 'js_finder',
+                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
+                # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
             }
         elif mode == 'active':
             futures = {

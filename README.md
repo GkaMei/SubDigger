@@ -15,8 +15,7 @@
 
 ### 强大的被动收集能力
 
-1. **证书透明度收集**：支持 `crtsh`、`censys_api`。
-2. **常规检查收集**：支持多种检查方法，包括：
+1. **常规检查收集**：支持多种检查方法，包括：
    - 域传送漏洞（`axfr`）
    - 跨域策略文件（`cdx`）
    - HTTPS证书（`cert`）
@@ -24,20 +23,21 @@
    - robots 文件（`robots`）
    - sitemap 文件（`sitemap`）
    - NSEC 记录遍历（`dnssec`）
-3. **爬虫收集**：支持`archivecrawl`，`commoncrawl`。
-4. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
-5. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
+2. **爬虫收集**：支持`archivecrawl`，`commoncrawl`。
+3. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
+4. **证书透明度收集**：支持 `crtsh`、`censys_api`。
+5. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
 6. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
 7. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
 8. **子域爬取**：根据已有子域请求响应体及 JS，从中发现新子域。
 
 ### 强大的主动收集能力
 
-1. **子域爆破**：字典爆破模块使用 `ksubdomain`，DNS 解析速度极快且更准确。
+1. **子域爆破**：字典爆破模块使用 `ksubdomain`，DNS 解析速度极快且更准确(需要root权限启动)。
 
 ### 强大的数据处理功能
 
-- 支持自动去重，筛选有效子域并使用`httpx`扩展域名、ip信息，结果导出为 `json` 格式。
+- 支持自动去重，筛选有效子域并使用`httpx`扩展更多子域信息，结果导出为 `json` 格式。
 
 如果您有其他优秀的想法，请随时告诉我！😎
 
