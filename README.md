@@ -23,17 +23,17 @@
    - robots 文件（`robots`）
    - sitemap 文件（`sitemap`）
    - NSEC 记录遍历（`dnssec`）
-2. **爬虫收集**：支持`archivecrawl`，`commoncrawl`。
-3. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
-4. **证书透明度收集**：支持 `crtsh`、`censys_api`。
-5. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
-6. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
-7. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
-8. **子域爬取**：根据已有子域请求响应体及 JS，从中发现新子域。
+2. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
+3. **证书透明度收集**：支持 `crtsh`、`censys_api`。
+4. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
+5. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
+6. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
 
 ### 强大的主动收集能力
 
 1. **子域爆破**：字典爆破模块使用 `ksubdomain`，DNS 解析速度极快且更准确(需要root权限启动)。
+2. **爬虫收集**：支持`async_link_harvester`，`web_depth_explorer`。
+3. **子域爬取**：根据已有子域请求响应体及 JS，从中发现新子域。
 
 ### 强大的数据处理功能
 
