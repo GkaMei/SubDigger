@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import logging
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -26,6 +25,13 @@ async def get_links(session, url, semaphore, base_url, visited, subdomains, max_
                     return set()  # 如果不是 HTML 内容，返回空集合
 
                 html = await response.text()
+                
+                # 检查 html 内容
+                if not html.strip():  # 如果 html 为空
+                    logger.warning(f"Received empty HTML for {url}")
+                    return set()
+
+                # 使用 BeautifulSoup 解析 HTML
                 soup = BeautifulSoup(html, 'html.parser')
                 links = set()
 
@@ -52,10 +58,11 @@ async def get_links(session, url, semaphore, base_url, visited, subdomains, max_
             if e.status == 405:
                 logger.warning(f"Method Not Allowed for {url}. Consider checking the request method.")
             else:
+                logger.error(f"Error fetching {url}: {e}")
                 return set()
         except Exception as e:
+            logger.error(f"Unexpected error for {url}: {e}")
             return set()
-
 
 async def crawl(session, url, depth, semaphore, base_url, visited, subdomains, max_depth):
     if depth > max_depth or url in visited:
@@ -68,7 +75,6 @@ async def crawl(session, url, depth, semaphore, base_url, visited, subdomains, m
     tasks = [crawl(session, link, depth + 1, semaphore, base_url, visited, subdomains, max_depth) for link in links]
     await asyncio.gather(*tasks)
 
-
 async def start_crawl(base_url, max_depth):
     semaphore = asyncio.Semaphore(100)
     visited = set()
@@ -78,7 +84,6 @@ async def start_crawl(base_url, max_depth):
         await crawl(session, base_url, 0, semaphore, base_url, visited, subdomains, max_depth)
     
     return subdomains
-
 
 def get_subdomains(domain, max_depth=3):
     subdomains = asyncio.run(start_crawl(domain, max_depth))
