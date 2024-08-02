@@ -12,6 +12,7 @@ import Plugins.domain.bevigil_api as bevigil_api
 import Plugins.domain.censys_api as censys_api
 import Plugins.domain.httpx as httpx
 import Plugins.domain.dns_search as dns_search
+import Plugins.domain.site_map as site_map
 import Plugins.ResultToFile.result_to_file as result_to_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -49,12 +50,13 @@ def get_subdomains(domain, mode='passive'):
                 # executor.submit(quake.get_subdomains, domain): 'quake',
                 # executor.submit(threatbook.get_subdomains, domain): 'threatbook',
                 # executor.submit(dig.get_subdomains, domain): 'dig',
-                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
-                # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
+                # executor.submit(dns_search.get_subdomains, domain): 'dns_search',
             }
         elif mode == 'active':
             futures = {
-                executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
+                executor.submit(site_map.get_subdomains, domain): 'site_map',
+                # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
+                # executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
             }
         else:
             print("请选择一种扫描的方式 'passive' 或 'active'")
@@ -77,13 +79,17 @@ def main():
     主函数，获取用户输入的域名并执行子域名获取和保存操作。
     """
     parser = argparse.ArgumentParser(description='强大的子域收集工具')
-    parser.add_argument('-mode', choices=['active', 'passive'], required=True, help='请选择主动扫描或者被动扫描: active 或 passive')
+    parser.add_argument('-active', dest='mode', action='store_const', const='active', help='选择主动扫描')
+    parser.add_argument('-passive', dest='mode', action='store_const', const='passive', help='选择被动扫描')
     parser.add_argument('domain', help='要扫描的域名')
     
     args = parser.parse_args()
     
     domain = args.domain
     mode = args.mode
+    
+    if mode is None:
+        parser.error("必须选择一种扫描模式: -active 或 -passive")
     
     if check_domain(domain):
         results = get_subdomains(domain, mode=mode)
