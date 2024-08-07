@@ -47,6 +47,3 @@ def parse_results(html, domain):
                     results.append(subdomain[0])  # 只保留子域名部分
 
     return results
-
-domain = "qq.com"
-print(get_subdomains(domain))

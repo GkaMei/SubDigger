@@ -17,7 +17,6 @@ import Plugins.domain.site_map as site_map
 import Plugins.ResultToFile.result_to_file as result_to_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-
 def check_domain(domain):
     """
     检查域名是否存在泛解析。
@@ -47,12 +46,12 @@ def get_subdomains(domain, mode='passive'):
                 executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
                 executor.submit(google_search.get_subdomains, domain): 'google_search',
                 executor.submit(baidu_search.get_subdomains, domain): 'baidu_search',
+                executor.submit(dig.get_subdomains, domain): 'dig', #测试域传送
+                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
                 executor.submit(censys_api.get_subdomains, domain): 'censys_api',
                 executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
-                executor.submit(quake.get_subdomains, domain): 'quake',
-                executor.submit(threatbook.get_subdomains, domain): 'threatbook',
-                executor.submit(dig.get_subdomains, domain): 'dig',
-                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
+                executor.submit(quake.get_subdomains, domain): 'quake', #360_api目前api可以使用
+                # executor.submit(threatbook.get_subdomains, domain): 'threatbook', #微步,目前无api
             }
         elif mode == 'active':
             futures = {
