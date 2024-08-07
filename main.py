@@ -7,6 +7,7 @@ import Plugins.domain.dig as dig
 import Plugins.domain.quake as quake 
 import Plugins.domain.threatbook as threatbook
 import Plugins.domain.google_search as google_search
+import Plugins.domain.baidu_search as baidu_search
 import Plugins.domain.js_finder as js_finder
 import Plugins.domain.bevigil_api as bevigil_api
 import Plugins.domain.censys_api as censys_api
@@ -42,21 +43,22 @@ def get_subdomains(domain, mode='passive'):
         
         if mode == 'passive':
             futures = {
-                # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
-                # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
-                # executor.submit(google_search.get_subdomains, domain): 'google_search',
-                # executor.submit(censys_api.get_subdomains, domain): 'censys_api',
-                # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
-                # executor.submit(quake.get_subdomains, domain): 'quake',
-                # executor.submit(threatbook.get_subdomains, domain): 'threatbook',
-                # executor.submit(dig.get_subdomains, domain): 'dig',
-                # executor.submit(dns_search.get_subdomains, domain): 'dns_search',
+                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
+                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
+                executor.submit(google_search.get_subdomains, domain): 'google_search',
+                executor.submit(baidu_search.get_subdomains, domain): 'baidu_search',
+                executor.submit(censys_api.get_subdomains, domain): 'censys_api',
+                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
+                executor.submit(quake.get_subdomains, domain): 'quake',
+                executor.submit(threatbook.get_subdomains, domain): 'threatbook',
+                executor.submit(dig.get_subdomains, domain): 'dig',
+                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
             }
         elif mode == 'active':
             futures = {
                 executor.submit(site_map.get_subdomains, domain): 'site_map',
-                # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
-                # executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
+                executor.submit(js_finder.get_subdomains, domain): 'js_finder',
+                executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
             }
         else:
             print("请选择一种扫描的方式 'passive' 或 'active'")
