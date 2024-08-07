@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import re
 import time
-import json
+import random
 
 def get_subdomains(domain):
     subdomains = set()  # 使用集合来存储不重复的子域名
@@ -25,7 +25,7 @@ def get_subdomains(domain):
                 break
             subdomains.update(new_subdomains)
             start += 10  # 移动到下一页
-            time.sleep(2)  # 增加延迟以避免被封禁
+            time.sleep(random.uniform(1, 2))
         except requests.RequestException as e:
             print(f"请求失败: {e}")
             break
@@ -47,3 +47,6 @@ def parse_results(html, domain):
                     results.append(subdomain[0])  # 只保留子域名部分
 
     return results
+
+domain = "qq.com"
+print(get_subdomains(domain))
