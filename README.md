@@ -27,7 +27,7 @@
 3. **证书透明度收集**：支持 `crtsh`、`censys_api`。
 4. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
 5. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
-6. **搜索引擎发现子域**：支持 `bing`、`google` 全量搜索。
+6. **搜索引擎发现子域**：支持 `bing`、`google`、`baidu` 全量搜索。
 
 ### 强大的主动收集能力
 

@@ -11,6 +11,7 @@ import Plugins.domain.baidu_search as baidu_search
 import Plugins.domain.js_finder as js_finder
 import Plugins.domain.bevigil_api as bevigil_api
 import Plugins.domain.censys_api as censys_api
+import Plugins.domain.bing_search as bing_search
 import Plugins.domain.httpx as httpx
 import Plugins.domain.dns_search as dns_search
 import Plugins.domain.site_map as site_map
@@ -42,15 +43,16 @@ def get_subdomains(domain, mode='passive'):
         
         if mode == 'passive':
             futures = {
-                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
-                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
-                executor.submit(google_search.get_subdomains, domain): 'google_search',
-                executor.submit(baidu_search.get_subdomains, domain): 'baidu_search',
-                executor.submit(dig.get_subdomains, domain): 'dig', #测试域传送
-                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
-                executor.submit(censys_api.get_subdomains, domain): 'censys_api',
-                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
-                executor.submit(quake.get_subdomains, domain): 'quake', #360_api目前api可以使用
+                # executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
+                # executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
+                executor.submit(bing_search.get_subdomains, domain): 'bing_search',
+                # executor.submit(google_search.get_subdomains, domain): 'google_search',
+                # executor.submit(baidu_search.get_subdomains, domain): 'baidu_search',
+                # executor.submit(dig.get_subdomains, domain): 'dig', #测试域传送
+                # executor.submit(dns_search.get_subdomains, domain): 'dns_search',
+                # executor.submit(censys_api.get_subdomains, domain): 'censys_api',
+                # executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
+                # executor.submit(quake.get_subdomains, domain): 'quake', #360_api目前api可以使用
                 # executor.submit(threatbook.get_subdomains, domain): 'threatbook', #微步,目前无api
             }
         elif mode == 'active':
