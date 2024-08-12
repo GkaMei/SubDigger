@@ -78,5 +78,19 @@ async def start_crawl(base_url: str, max_depth: int) -> set:
     return subdomains
 
 def get_subdomains(domain: str, max_depth: int = 3) -> list:
+    """
+    获取指定域名的子域名。
+
+    参数:
+    domain (str): 要爬取的域名，可能不包含协议（http:// 或 https://）。
+    max_depth (int): 爬取的最大深度，默认为 3。
+    """
+    
+    # 检查 domain 是否以 http:// 或 https:// 开头，如果没有则添加 http://
+    if not domain.startswith(('http://', 'https://')):
+        domain = 'http://' + domain
+
+    # 使用 asyncio.run 启动异步爬取，获取子域名
     subdomains = asyncio.run(start_crawl(domain, max_depth))
+
     return list(subdomains)
