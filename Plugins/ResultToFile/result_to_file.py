@@ -3,6 +3,11 @@ import os
 import json
 
 def save_result_to_file(result):
+    # 检查结果是否为空
+    if not result:
+        print("结果为空，不写入文件。")
+        return  # 如果结果为空，直接返回，不执行后续操作
+    
     # 获取当前时间戳
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     

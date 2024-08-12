@@ -7,75 +7,67 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def is_subdomain(child, parent):
+def is_subdomain(child: str, parent: str) -> bool:
     parent_domains = parent.split('.')
     child_domains = child.split('.')
     return child_domains[-len(parent_domains):] == parent_domains
 
-async def get_links(session, url, semaphore, base_url, visited, subdomains, max_depth):
+def extract_links(soup: BeautifulSoup, base_url: str, subdomains: set) -> set:
+    links = set()
+    for tag in soup.find_all(['a', 'img', 'form', 'meta']):
+        url_attr = 'href' if tag.name != 'img' else 'src'
+        if tag.name == 'form':
+            url_attr = 'action'
+        if tag.name == 'meta' and tag.get('http-equiv') == 'refresh':
+            content = tag.get('content')
+            if content:
+                url_part = content.split(';url=')[-1]
+                link = urljoin(base_url, url_part)
+        else:
+            link = urljoin(base_url, tag.get(url_attr, ''))
+
+        parsed_link = urlparse(link)
+        if is_subdomain(parsed_link.netloc, urlparse(base_url).netloc):
+            links.add(link)
+            subdomains.add(parsed_link.netloc)
+    return links
+
+async def get_links(session: aiohttp.ClientSession, url: str, semaphore: asyncio.Semaphore, base_url: str, visited: set, subdomains: set) -> set:
     async with semaphore:
         try:
-            async with session.get(url, allow_redirects=True) as response:
-                # 检查响应状态
+            async with session.get(url, allow_redirects=True, timeout=10) as response:
                 response.raise_for_status()
-
-                # 检查内容类型
                 content_type = response.headers.get('Content-Type', '')
                 if 'text/html' not in content_type:
-                    return set()  # 如果不是 HTML 内容，返回空集合
+                    return set()
 
                 html = await response.text()
-                
-                # 检查 html 内容
-                if not html.strip():  # 如果 html 为空
+                if not html.strip():
                     logger.warning(f"Received empty HTML for {url}")
                     return set()
 
-                # 使用 BeautifulSoup 解析 HTML
                 soup = BeautifulSoup(html, 'html.parser')
-                links = set()
-
-                for tag in soup.find_all([True]):
-                    url_attr = 'href' if tag.name != 'img' else 'src'
-                    if tag.name == 'form':
-                        url_attr = 'action'
-                    if tag.name == 'meta' and tag.get('http-equiv') == 'refresh':
-                        content = tag.get('content')
-                        if content:
-                            url_part = content.split(';url=')[-1]
-                            link = urljoin(url, url_part)
-                    else:
-                        link = urljoin(url, tag.get(url_attr, ''))
-
-                    parsed_link = urlparse(link)
-                    if is_subdomain(parsed_link.netloc, urlparse(base_url).netloc):
-                        links.add(link)
-                        subdomains.add(parsed_link.netloc)
-
-                return links
+                return extract_links(soup, base_url, subdomains)
 
         except aiohttp.ClientResponseError as e:
-            if e.status == 405:
-                logger.warning(f"Method Not Allowed for {url}. Consider checking the request method.")
-            else:
-                logger.error(f"Error fetching {url}: {e}")
-                return set()
+            logger.warning(f"Error fetching {url}: {e}")
+            return set()
         except Exception as e:
             logger.error(f"Unexpected error for {url}: {e}")
             return set()
 
-async def crawl(session, url, depth, semaphore, base_url, visited, subdomains, max_depth):
+async def crawl(session: aiohttp.ClientSession, url: str, depth: int, semaphore: asyncio.Semaphore, base_url: str, visited: set, subdomains: set, max_depth: int):
     if depth > max_depth or url in visited:
         return
 
     logger.info(f"Crawling: {url}, Depth: {depth}")
     visited.add(url)
 
-    links = await get_links(session, url, semaphore, base_url, visited, subdomains, max_depth)
+    links = await get_links(session, url, semaphore, base_url, visited, subdomains)
     tasks = [crawl(session, link, depth + 1, semaphore, base_url, visited, subdomains, max_depth) for link in links]
     await asyncio.gather(*tasks)
 
-async def start_crawl(base_url, max_depth):
+async def start_crawl(base_url: str, max_depth: int) -> set:
     semaphore = asyncio.Semaphore(100)
     visited = set()
     subdomains = set()
@@ -85,6 +77,6 @@ async def start_crawl(base_url, max_depth):
     
     return subdomains
 
-def get_subdomains(domain, max_depth=3):
+def get_subdomains(domain: str, max_depth: int = 3) -> list:
     subdomains = asyncio.run(start_crawl(domain, max_depth))
     return list(subdomains)
