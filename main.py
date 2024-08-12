@@ -43,22 +43,22 @@ def get_subdomains(domain, mode='passive'):
         
         if mode == 'passive':
             futures = {
-                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh',
-                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com',
-                executor.submit(bing_search.get_subdomains, domain): 'bing_search',
-                executor.submit(google_search.get_subdomains, domain): 'google_search',
-                executor.submit(baidu_search.get_subdomains, domain): 'baidu_search', #报warning,需要处理
                 executor.submit(dig.get_subdomains, domain): 'dig', #测试域传送
-                executor.submit(dns_search.get_subdomains, domain): 'dns_search',
-                executor.submit(censys_api.get_subdomains, domain): 'censys_api',
-                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api',
-                executor.submit(quake.get_subdomains, domain): 'quake', #360_api目前api可以使用
-                # executor.submit(threatbook.get_subdomains, domain): 'threatbook', #微步,目前无api
+                executor.submit(dns_search.get_subdomains, domain): 'dns_search', #dns查询
+                executor.submit(crt_sh.get_subdomains, domain): 'crt_sh', #证书透明度
+                executor.submit(chaziyu_com.get_subdomains, domain): 'chaziyu_com', #查子域网站
+                executor.submit(bing_search.get_subdomains, domain): 'bing_search', #bing搜索语法
+                executor.submit(google_search.get_subdomains, domain): 'google_search', #google搜索语法
+                executor.submit(baidu_search.get_subdomains, domain): 'baidu_search', #报warning,需要处理
+                executor.submit(site_map.get_subdomains, domain): 'site_map', #url持续读取链接
+                executor.submit(js_finder.get_subdomains, domain): 'js_finder', #js文件存在的url
+                executor.submit(quake.get_subdomains, domain): 'quake', #360_api可以使用
+                executor.submit(censys_api.get_subdomains, domain): 'censys_api', #censys_api可以使用
+                executor.submit(bevigil_api.get_subdomains, domain): 'bevigil_api', #bevigil_api可以使用
+                # executor.submit(threatbook.get_subdomains, domain): 'threatbook', #微步,需购买api账号
             }
         elif mode == 'active':
             futures = {
-                # executor.submit(site_map.get_subdomains, domain): 'site_map',
-                # executor.submit(js_finder.get_subdomains, domain): 'js_finder',
                 executor.submit(ksubdomain.get_subdomains, domain): 'ksubdomain',
             }
         else:
