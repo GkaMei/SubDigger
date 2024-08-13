@@ -28,7 +28,7 @@ python3 main.py -active example.com
 # 使用工具自带字典进行扫描
 python3 main.py -dict example.com 
 
-# 使用个性化字典进行扫描
+# 使用自定义字典进行扫描
 python3 main.py -dict /path/subdomain.txt example.com 
 ```
 

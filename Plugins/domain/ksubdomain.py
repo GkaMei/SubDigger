@@ -4,6 +4,7 @@ import re
 import os
 import logging
 from typing import List, Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # 设置日志记录
 logging.basicConfig(level=logging.INFO)
@@ -40,11 +41,18 @@ def get_subdomains_tools(domain: str) -> List[str]:
 
     all_subdomains = set()
 
-    for tool, command in commands.items():
-        output = execute_command(command)
-        if output:
-            logging.info(f"{tool.capitalize()} output:\n{output}")
-            all_subdomains.update(output.splitlines())
+    with ThreadPoolExecutor() as executor:
+        future_to_tool = {executor.submit(execute_command, command): tool for tool, command in commands.items()}
+        
+        for future in as_completed(future_to_tool):
+            tool = future_to_tool[future]
+            try:
+                output = future.result()
+                if output:
+                    logging.info(f"{tool.capitalize()} output:\n{output}")
+                    all_subdomains.update(output.splitlines())
+            except Exception as e:
+                logging.error(f"{tool.capitalize()} generated an exception: {e}")
 
     logging.info(f"Total unique subdomains found: {len(all_subdomains)}")
     return list(all_subdomains)

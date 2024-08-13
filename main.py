@@ -90,7 +90,7 @@ def main():
     if check_url.check_domain(domain):
         results = get_subdomains(domain, mode=mode, dict_file=dict_file)
         
-        httpx_results = httpx.process_domains(results)
+        httpx_results = httpx.run_process_domains(results)
         result_to_file.save_result_to_file(httpx_results)
 
 if __name__ == "__main__":

@@ -1,49 +1,50 @@
 import os
-import subprocess
-import concurrent.futures
+import asyncio
 
 # 使用环境变量或默认路径设置工具目录
 TOOLS_DIR = os.getenv('TOOLS_DIR', os.path.abspath("tools"))
 
-def execute_command(command):
-    """执行给定的命令并捕获输出，返回命令的输出或错误信息。"""
-    try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        return f"命令执行错误: {e.stderr}"
-    except FileNotFoundError:
-        return "命令未找到。请确保命令已安装并在您的 PATH 中。"
-    except Exception as e:
-        return f"执行命令时发生错误: {e}"
+async def execute_command(command):
+    """异步执行给定的命令并捕获输出，返回命令的输出或错误信息。"""
+    process = await asyncio.create_subprocess_exec(
+        *command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    if process.returncode == 0:
+        return stdout.decode().strip()
+    else:
+        return f"命令执行错误: {stderr.decode().strip()}"
 
-def scan_domain(domain):
+async def scan_domain(domain):
     """使用 httpx 工具扫描指定域名，并返回结果。"""
     httpx_command = [os.path.join(TOOLS_DIR, 'httpx', 'httpx'), '-u', domain, '-ip', '-title', '-nc']
-    return domain, execute_command(httpx_command).strip()
+    return domain, await execute_command(httpx_command)
 
-def process_domains(result):
-    """处理域名列表，使用多线程扫描每个域名，并收集结果。"""
+async def process_domains(result):
+    """处理域名列表，使用异步扫描每个域名，并收集结果。"""
     unique_domains = set()
 
     # 收集去重后的域名
     for key, domains in result.items():
         if domains is not None and isinstance(domains, list):
             unique_domains.update(domains)
-    
-    # 如果去重后的域名数量超过 20，提前返回
-    if len(unique_domains) > 20:
-        return list(unique_domains)
 
-    # 否则，继续执行 httpx 扫描
-    httpx_results = []
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(scan_domain, domain): domain for domain in unique_domains}
-        for future in concurrent.futures.as_completed(futures):
-            domain = futures[future]
-            try:
-                httpx_results.append(future.result())
-            except Exception as e:
-                print(f"处理域名 {domain} 时发生错误: {e}")
+    # 使用 asyncio.gather 并发处理所有域名
+    tasks = [scan_domain(domain) for domain in unique_domains]
+    httpx_results = await asyncio.gather(*tasks, return_exceptions=True)
 
-    return httpx_results
+    # 处理结果，过滤掉错误
+    processed_results = []
+    for result in httpx_results:
+        if isinstance(result, Exception):
+            print(f"处理域名时发生错误: {result}")
+        else:
+            processed_results.append(result)
+
+    return processed_results
+
+def run_process_domains(result):
+    """同步函数，运行异步处理域名的函数。"""
+    return asyncio.run(process_domains(result))
