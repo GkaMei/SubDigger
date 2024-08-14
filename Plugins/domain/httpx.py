@@ -13,9 +13,9 @@ async def execute_command(command):
     )
     stdout, stderr = await process.communicate()
     if process.returncode == 0:
-        return stdout.decode().strip()
+        return stdout.decode(errors='ignore').strip()  # 忽略解码错误
     else:
-        return f"命令执行错误: {stderr.decode().strip()}"
+        return f"命令执行错误: {stderr.decode(errors='ignore').strip()}"  # 忽略解码错误
 
 async def scan_domain(domain):
     """使用 httpx 工具扫描指定域名，并返回结果。"""

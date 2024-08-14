@@ -1,10 +1,5 @@
 import subprocess
 import dns.resolver
-import json
-import logging
-
-# 设置日志记录
-logging.basicConfig(level=logging.INFO)
 
 def get_ns_records(domain):
     """
@@ -13,8 +8,7 @@ def get_ns_records(domain):
     try:
         ns_records = dns.resolver.resolve(domain, 'NS')
         return [str(ns_record.target).rstrip('.') for ns_record in ns_records]
-    except Exception as e:
-        logging.error(f"获取NS记录失败: {e}")
+    except Exception:
         return []
 
 def perform_zone_transfer(ns_server, domain, timeout=5):
@@ -24,14 +18,12 @@ def perform_zone_transfer(ns_server, domain, timeout=5):
     try:
         result = subprocess.run(['dig', f'@{ns_server}', domain, 'AXFR'], capture_output=True, text=True, timeout=timeout)
         if result.returncode == 0:
-            logging.info(f"域传送返回数据: {result.stdout}")  # 打印返回数据
             return result.stdout
         else:
-            logging.warning(f"域传送失败，返回码: {result.returncode}")
             return ""
     except subprocess.TimeoutExpired:
         return ""
-    except Exception as e:
+    except Exception:
         return ""
 
 def extract_subdomains(zone_data):
@@ -49,24 +41,24 @@ def extract_subdomains(zone_data):
 
 def get_subdomains(domain):
     """
-    获取目标域名的子域名并返回JSON格式的字符串
+    获取目标域名的子域名并返回子域名列表
     """
-    ns_servers = get_ns_records(domain)
-    if not ns_servers:
-        return json.dumps({"domain": domain, "subdomains": []}, indent=4)
+    try:
+        ns_servers = get_ns_records(domain)
+        if not ns_servers:
+            return []
 
-    all_subdomains = set()
-    for ns_server in ns_servers:
-        zone_data = perform_zone_transfer(ns_server, domain)
-        if zone_data:
-            subdomains = extract_subdomains(zone_data)
-            logging.info(f"域传送成功，提取子域名: {subdomains}")
-            all_subdomains.update(subdomains)
-        else:
-            logging.info(f"域传送失败或没有返回数据，尝试下一个NS服务器。")
+        all_subdomains = set()
+        for ns_server in ns_servers:
+            zone_data = perform_zone_transfer(ns_server, domain)
+            if zone_data:
+                subdomains = extract_subdomains(zone_data)
+                all_subdomains.update(subdomains)
 
-    if all_subdomains:
+        if not all_subdomains:
+            print("该域名不存在域传送漏洞")
+
         return list(all_subdomains)
-    else:
-        logging.info("未能成功进行域传送，未提取到子域名。")
-        return None
+    except Exception as e:
+        print(f"发生错误: {e}")
+        return []
