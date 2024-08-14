@@ -1,8 +1,9 @@
 import requests
 import re
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 提取 JavaScript 中的 URL
@@ -55,29 +56,19 @@ def extract_html(URL):
         return None
 
 # 处理 URL，生成绝对 URL
-def process_url(URL, re_URL):
-    black_url = ["javascript:"]
-    URL_raw = urlparse(URL)
-    ab_URL = URL_raw.netloc
-    host_URL = URL_raw.scheme
-    if re_URL[0:2] == "//":
-        result = host_URL + ":" + re_URL
-    elif re_URL[0:4] == "http":
-        result = re_URL
-    elif re_URL[0:2] != "//" and re_URL not in black_url:
-        if re_URL[0:1] == "/":
-            result = host_URL + "://" + ab_URL + re_URL
-        else:
-            if re_URL[0:1] == ".":
-                if re_URL[0:2] == "..":
-                    result = host_URL + "://" + ab_URL + re_URL[2:]
-                else:
-                    result = host_URL + "://" + ab_URL + re_URL[1:]
-            else:
-                result = host_URL + "://" + ab_URL + "/" + re_URL
+def process_url(base_url, relative_url):
+    # 处理协议相对 URL
+    if relative_url.startswith('//'):
+        return 'http:' + relative_url  # 添加协议
+    # 处理绝对 URL
+    elif relative_url.startswith('http'):
+        return relative_url  # 绝对 URL 直接返回
+    # 处理以 / 开头的相对 URL
+    elif relative_url.startswith('/'):
+        return urljoin(base_url, relative_url)  # 处理以 / 开头的相对 URL
+    # 处理其他相对 URL
     else:
-        result = URL
-    return result
+        return urljoin(base_url, relative_url)  # 处理其他相对 URL
 
 # 查找子域名
 def find_subdomain(urls, mainurl):
@@ -130,5 +121,5 @@ def get_subdomains(url):
     urls = find_by_url(url)
     if urls is None:
         return None
-    subdomains = find_subdomain(urls, url)    
+    subdomains = find_subdomain(urls, url)
     return list(subdomains)

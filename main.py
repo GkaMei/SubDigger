@@ -31,19 +31,19 @@ def get_subdomains(domain, mode='passive', dict_file=None):
         
         if mode == 'passive':  # 被动扫描
             services = {
-                # 'dig': dig.get_subdomains,
-                # 'dns_search': dns_search.get_subdomains,
-                # 'crt_sh': crt_sh.get_subdomains,
-                # 'chaziyu_com': chaziyu_com.get_subdomains,
-                # 'bing_search': bing_search.get_subdomains,
-                # 'google_search': google_search.get_subdomains,
-                # 'baidu_search': baidu_search.get_subdomains,
-                # 'site_map': site_map.get_subdomains,
+                'dig': dig.get_subdomains,
+                'dns_search': dns_search.get_subdomains,
+                'crt_sh': crt_sh.get_subdomains,
+                'chaziyu_com': chaziyu_com.get_subdomains,
+                'bing_search': bing_search.get_subdomains,
+                'google_search': google_search.get_subdomains,
+                'baidu_search': baidu_search.get_subdomains,
+                'site_map': site_map.get_subdomains,
                 'js_finder': js_finder.get_subdomains,
-                # 'quake': quake.get_subdomains,
-                # 'censys_api': censys_api.get_subdomains,
-                # 'bevigil_api': bevigil_api.get_subdomains,
-                # 'threatbook': threatbook.get_subdomains, #需要企业api账号
+                'quake': quake.get_subdomains,
+                'censys_api': censys_api.get_subdomains,
+                'bevigil_api': bevigil_api.get_subdomains,
+                'threatbook': threatbook.get_subdomains, #需要企业api账号
             }
             for name, func in services.items():
                 futures[executor.submit(func, domain)] = name
@@ -90,7 +90,7 @@ def main():
     if check_url.check_domain(domain):
         results = get_subdomains(domain, mode=mode, dict_file=dict_file)
         
-        httpx_results = httpx.run_process_domains(results)
+        httpx_results = httpx.run_process_domains(results, domain)
         result_to_file.save_result_to_file(httpx_results)
 
 if __name__ == "__main__":
