@@ -54,7 +54,7 @@ def get_subdomains_tools(domain: str) -> List[str]:
             except Exception as e:
                 logging.error(f"{tool.capitalize()} generated an exception: {e}")
 
-    logging.info(f"Total unique subdomains found: {len(all_subdomains)}")
+    logging.info(f"Tools total subdomains found: {len(all_subdomains)}")
     return list(all_subdomains)
 
 def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[str]:
@@ -79,6 +79,6 @@ def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[st
     
     output = execute_command(ksubdomain_command)    
     ksubdomain_output = extract_useful_info(output)
-    logging.info(f"Total unique subdomains found: {len(ksubdomain_output)}")
+    logging.info(f"Dict_scan total subdomains found: {len(ksubdomain_output)}")
     
     return list(ksubdomain_output)

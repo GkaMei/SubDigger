@@ -47,13 +47,11 @@ def get_subdomains(domain, mode='passive', dict_file=None):
             }
             for name, func in services.items():
                 futures[executor.submit(func, domain)] = name
-
-        elif mode == 'active':  # 工具扫描
-            futures[executor.submit(ksubdomain.get_subdomains_tools, domain)] = 'tools'
         
-        elif mode == 'dict':  # 字典扫描
+        elif mode == 'dict':  # 工具字典扫描
             if dict_file is None:
                 futures[executor.submit(ksubdomain.get_subdomains_dict, domain)] = 'ksubdomain_dict'
+                futures[executor.submit(ksubdomain.get_subdomains_tools, domain)] = 'tools'
             else:
                 # 确保参数顺序正确
                 futures[executor.submit(ksubdomain.get_subdomains_dict, dict_file, domain)] = 'ksubdomain_dict'
@@ -75,7 +73,6 @@ def get_subdomains(domain, mode='passive', dict_file=None):
 
 def main():
     parser = argparse.ArgumentParser(description='子域收集工具')
-    parser.add_argument('-active', dest='mode', action='store_const', const='active', help='选择主动扫描')
     parser.add_argument('-passive', dest='mode', action='store_const', const='passive', help='选择被动扫描')
     parser.add_argument('-dict', dest='mode', action='store_const', const='dict', help='选择字典扫描')
     parser.add_argument('domain', help='要扫描的域名')
