@@ -1,10 +1,18 @@
 import requests
+import configparser
+
+# 创建配置解析器
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# 从配置文件中读取 ThreatBook API 密钥
+bevigil_api_key = config['bevigil_api']['api_key']
 
 def get_subdomains(domain):
     # 使用 f-string 格式化 URL
     url = f'http://osint.bevigil.com/api/{domain}/subdomains/'
     headers = {
-        'X-Access-Token': 'dnFutvGxy3RA7ZvM'  # 替换为你的实际 API 密钥
+        'X-Access-Token': bevigil_api_key  # 替换为你的实际 API 密钥
     }
 
     # 发送 GET 请求

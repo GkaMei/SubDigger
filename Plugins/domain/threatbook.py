@@ -1,10 +1,18 @@
 import requests
+import configparser
+
+# 创建配置解析器
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# 从配置文件中读取 ThreatBook API 密钥
+threatbook_api_key = config['threatbook_api']['api_key']
 
 def get_subdomains(domain):
     url = "https://api.threatbook.cn/v3/domain/sub_domains"
     
     query = {
-        "apikey": "433a77647d4c47c6a870122a1f0b8efed752d1294d804b25bfbe7dc31668d772",
+        "apikey": threatbook_api_key,  # 使用从配置文件中读取的 API 密钥
         "resource": domain
     }
 
@@ -15,7 +23,7 @@ def get_subdomains(domain):
 
         # 检查响应代码
         if data.get("response_code") != 0:
-            print(f"threatbook API 返回错误: {data.get('verbose_msg')}")
+            print(f"ThreatBook API 返回错误: {data.get('verbose_msg')}")
             return []
 
         # 提取子域名

@@ -4,12 +4,21 @@ from censys.common.exceptions import (
     CensysRateLimitExceededException,
     CensysException,
 )
+import configparser
 import sys
 
+# 创建配置解析器
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# 从配置文件中读取 Censys API 凭据
+censys_api_id = config['censys_api']['api_id']
+censys_api_secret = config['censys_api']['api_secret']
 
 def get_subdomains(domain):
     try:
-        censys_certificates = CensysCerts(api_id="adb83f74-e711-43b6-b1ff-4830aff687d8", api_secret="KtbKSQz3u5oYxeVP3dFy4yN8VivCTRQl")
+        # 使用从配置文件中读取的 API 凭据
+        censys_certificates = CensysCerts(api_id=censys_api_id, api_secret=censys_api_secret)
         query = f"names: {domain}"
         subdomains = set()
         page_number = 1
@@ -29,9 +38,9 @@ def get_subdomains(domain):
                 
             page_number += 1
             
-        filter_subdomains =  [
-        subdomain for subdomain in subdomains
-        if "*" not in subdomain and subdomain.endswith(domain) and subdomain != domain
+        filter_subdomains = [
+            subdomain for subdomain in subdomains
+            if "*" not in subdomain and subdomain.endswith(domain) and subdomain != domain
         ]
 
         return filter_subdomains
