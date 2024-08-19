@@ -31,7 +31,7 @@ def extract_useful_info(output: str) -> List[str]:
         return []  # 返回空列表表示未找到
 
 def get_subdomains_tools(domain: str) -> List[str]:
-    logging.info(f"Starting subdomain discovery for domain: {domain}")
+    logging.info(f"Starting subdomain discovery by Tools for domain : {domain}")
 
     commands = {
         'subfinder': [os.path.join(TOOLS_DIR, 'subfinder', 'subfinder'), '-d', domain, '-silent'],
@@ -54,7 +54,6 @@ def get_subdomains_tools(domain: str) -> List[str]:
             except Exception as e:
                 logging.error(f"{tool.capitalize()} generated an exception: {e}")
 
-    logging.info(f"Tools total subdomains found: {len(all_subdomains)}")
     return list(all_subdomains)
 
 def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[str]:
@@ -67,7 +66,7 @@ def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[st
     """
     
     if dict_file is None:
-        logging.info(f"运行内置字典扫描: {domain}")
+        logging.info(f"开始运行内置字典扫描: {domain}")
         dict_file = os.path.join(TOOLS_DIR, "passwd", "Subdomain.txt")
     
     ksubdomain_command = [
@@ -79,6 +78,5 @@ def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[st
     
     output = execute_command(ksubdomain_command)    
     ksubdomain_output = extract_useful_info(output)
-    logging.info(f"Dict_scan total subdomains found: {len(ksubdomain_output)}")
-    
+
     return list(ksubdomain_output)
