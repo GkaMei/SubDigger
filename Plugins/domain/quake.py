@@ -10,8 +10,6 @@ def get_subdomains(domain):
     # 从配置文件中读取 Quake API 密钥
     quake_api_key = config['quake_api']['api_key']
 
-    print(quake_api_key)
-
     headers = {
         "X-QuakeToken": quake_api_key  # 使用从配置文件中读取的密钥
     }

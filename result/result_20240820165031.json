@@ -1,0 +1,402 @@
+[
+    [
+        "cloudflare-patch-cndtest.bilibili.com",
+        ""
+    ],
+    [
+        "163.bilibili.com",
+        "https://163.bilibili.com [302 Found] [23.236.97.62]"
+    ],
+    [
+        "jobs.bilibili.com",
+        "https://jobs.bilibili.com [哔哩哔哩-招聘] [42.202.222.229]"
+    ],
+    [
+        "club.bilibili.com",
+        "https://club.bilibili.com [出错啦! - bilibili.com] [23.236.97.62]"
+    ],
+    [
+        "uat-www.bilibili.com",
+        ""
+    ],
+    [
+        "link.bilibili.com",
+        "https://link.bilibili.com [个人中心 - bilibili link] [117.23.60.15]"
+    ],
+    [
+        "mail.bilibili.com",
+        "http://mail.bilibili.com [301 Moved Permanently] [47.246.23.229]"
+    ],
+    [
+        "asr-speechio.bilibili.com",
+        "https://asr-speechio.bilibili.com [404 Not Found] [61.170.79.222]"
+    ],
+    [
+        "api.bilibili.com",
+        "https://api.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "gf.bilibili.com",
+        "https://gf.bilibili.com [哔哩哔哩工房] [148.153.56.162]"
+    ],
+    [
+        "member.bilibili.com",
+        "https://member.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "game.bilibili.com",
+        "https://game.bilibili.com [bilibili游戏丨你的幻想世界] [42.202.168.119]"
+    ],
+    [
+        "xn--bilibili.com",
+        ""
+    ],
+    [
+        "pay.bilibili.com",
+        "https://pay.bilibili.com [302 Found] [23.236.97.62]"
+    ],
+    [
+        "live-trace.bilibili.com",
+        "https://live-trace.bilibili.com [出错啦! - bilibili.com] [148.153.64.18]"
+    ],
+    [
+        "push-msg.bilibili.com",
+        ""
+    ],
+    [
+        "app-blue.bilibili.com",
+        ""
+    ],
+    [
+        "cpcontacts.bilibili.com",
+        ""
+    ],
+    [
+        "c.bilibili.com",
+        "https://c.bilibili.com [301 Moved Permanently] [148.153.56.162]"
+    ],
+    [
+        "vc.bilibili.com",
+        "https://vc.bilibili.com [301 Moved Permanently] [148.153.46.90]"
+    ],
+    [
+        "openhome.bilibili.com",
+        "https://openhome.bilibili.com [哔哩哔哩开放平台] [163.181.145.238]"
+    ],
+    [
+        "manga.bilibili.com",
+        "https://manga.bilibili.com [哔哩哔哩漫画 - bilibili 正版漫画平台] [148.153.64.18]"
+    ],
+    [
+        "m.bilibili.com",
+        "https://m.bilibili.com [148.153.46.90]"
+    ],
+    [
+        "cloudproxy.bilibili.com",
+        ""
+    ],
+    [
+        "cpanel.bilibili.com",
+        ""
+    ],
+    [
+        "security.bilibili.com",
+        "https://security.bilibili.com [哔哩哔哩安全应急响应中心] [148.153.56.162]"
+    ],
+    [
+        "elec.bilibili.com",
+        "https://elec.bilibili.com [23.236.97.62]"
+    ],
+    [
+        "dev.bilibili.com",
+        ""
+    ],
+    [
+        "cloudflare-s1-cndtest.bilibili.com",
+        ""
+    ],
+    [
+        "bp.bilibili.com",
+        "https://bp.bilibili.com [14.205.93.60]"
+    ],
+    [
+        "account.bilibili.com",
+        "https://account.bilibili.com [302 Found] [148.153.56.162]"
+    ],
+    [
+        "maoer.bilibili.com",
+        "https://maoer.bilibili.com [301 Moved Permanently] [148.153.56.163]"
+    ],
+    [
+        "ad.bilibili.com",
+        "https://ad.bilibili.com [哔哩哔哩广告投放平台] [180.163.145.204]"
+    ],
+    [
+        "v.bilibili.com",
+        ""
+    ],
+    [
+        "livecmt-2.bilibili.com",
+        "https://livecmt-2.bilibili.com [101.200.42.181]"
+    ],
+    [
+        "global.bilibili.com",
+        ""
+    ],
+    [
+        "captcha.bilibili.com",
+        "https://captcha.bilibili.com [148.153.56.163]"
+    ],
+    [
+        "space.bilibili.com",
+        "https://space.bilibili.com [23.236.97.62]"
+    ],
+    [
+        "service.bilibili.com",
+        "https://service.bilibili.com [301 Moved Permanently] [47.246.24.227]"
+    ],
+    [
+        "search.bilibili.com",
+        "https://search.bilibili.com [148.153.64.18]"
+    ],
+    [
+        "*.xn--bilibili.com",
+        ""
+    ],
+    [
+        "secure.bilibili.com",
+        "https://secure.bilibili.com [302 Found] [42.177.83.134]"
+    ],
+    [
+        "bml.bilibili.com",
+        "https://bml.bilibili.com [BML2024精彩回放现已上线] [148.153.45.10]"
+    ],
+    [
+        "ir.bilibili.com",
+        "https://ir.bilibili.com [Bilibili Investor Home] [20.189.109.96]"
+    ],
+    [
+        "chat.bilibili.com",
+        "https://chat.bilibili.com [106.14.212.156]"
+    ],
+    [
+        "callback-mall.bilibili.com",
+        "https://callback-mall.bilibili.com [302 Found] [106.12.8.193]"
+    ],
+    [
+        "webmail.bilibili.com",
+        ""
+    ],
+    [
+        "huahuo.bilibili.com",
+        "https://huahuo.bilibili.com [bilibili花火UP主商业合作平台] [148.153.46.90]"
+    ],
+    [
+        "www.bilibili.com",
+        "https://www.bilibili.com [哔哩哔哩 (゜-゜)つロ 干杯~-bilibili] [117.23.60.14]"
+    ],
+    [
+        "h.bilibili.com",
+        "https://h.bilibili.com [哔哩哔哩相簿，绘你所想，拍你所爱] [111.225.214.25]"
+    ],
+    [
+        "bmall.bilibili.com",
+        "https://bmall.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "bmlsp.bilibili.com",
+        ""
+    ],
+    [
+        "webdisk.bilibili.com",
+        ""
+    ],
+    [
+        "partner.bilibili.com",
+        "https://partner.bilibili.com [服务商平台] [61.170.77.207]"
+    ],
+    [
+        "music.bilibili.com",
+        "https://music.bilibili.com [聚光｜哔哩哔哩音乐开放平台 - 哔哩哔哩弹幕视频网 - ( ゜- ゜)つロ 乾杯~] [148.153.45.10]"
+    ],
+    [
+        "player.bilibili.com",
+        "https://player.bilibili.com [哔哩哔哩外链播放器 - 使用说明] [47.246.23.229]"
+    ],
+    [
+        "bw.bilibili.com",
+        "https://bw.bilibili.com [BW2024，盛夏大作战，为热爱而战！] [148.153.56.162]"
+    ],
+    [
+        "moe.bilibili.com",
+        "https://moe.bilibili.com [bilibili 2015动画角色人气大赏 - 主页 - 哔哩哔哩弹幕视频网 - ( ゜- ゜)つロ 乾杯~ - bilibili] [117.23.60.13]"
+    ],
+    [
+        "apigame.bilibili.com",
+        "https://apigame.bilibili.com [211.152.148.249]"
+    ],
+    [
+        "shop.bilibili.com",
+        "https://shop.bilibili.com [商家平台] [23.236.97.62]"
+    ],
+    [
+        "passport.bilibili.com",
+        "https://passport.bilibili.com [302 Found] [148.153.56.163]"
+    ],
+    [
+        "manhua.bilibili.com",
+        "https://manhua.bilibili.com [301 Moved Permanently] [148.153.45.10]"
+    ],
+    [
+        "show.bilibili.com",
+        "https://show.bilibili.com [302 Found] [148.153.64.18]"
+    ],
+    [
+        "by.bilibili.com",
+        ""
+    ],
+    [
+        "bvpn.bilibili.com",
+        "https://bvpn.bilibili.com [47.245.25.184]"
+    ],
+    [
+        "big.bilibili.com",
+        "https://big.bilibili.com [302 Found] [23.236.97.62]"
+    ],
+    [
+        "activity.bilibili.com",
+        "https://activity.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "*.bilibili.com",
+        "https://bilibili.com [301 Moved Permanently] [119.3.70.188]"
+    ],
+    [
+        "f.bilibili.com",
+        "https://f.bilibili.com [bilibili起飞专业版] [23.236.97.62]"
+    ],
+    [
+        "creator.bilibili.com",
+        "https://creator.bilibili.com [哔哩哔哩必合 | 协同创作平台] [148.153.56.162]"
+    ],
+    [
+        "interface.bilibili.com",
+        "https://interface.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "cheers.bilibili.com",
+        "https://cheers.bilibili.com [出错啦! - bilibili.com] [61.170.77.228]"
+    ],
+    [
+        "bangumi.bilibili.com",
+        "https://bangumi.bilibili.com [302 Found] [148.153.56.162]"
+    ],
+    [
+        "cm.bilibili.com",
+        "https://cm.bilibili.com [cm.bilibili.com] [148.153.45.10]"
+    ],
+    [
+        "miniapp.bilibili.com",
+        "https://miniapp.bilibili.com [出错啦! - bilibili.com] [23.236.97.62]"
+    ],
+    [
+        "d.bilibili.com",
+        "https://d.bilibili.com [出错啦! - bilibili.com] [23.236.97.62]"
+    ],
+    [
+        "blink.bilibili.com",
+        ""
+    ],
+    [
+        "cool.bilibili.com",
+        "https://cool.bilibili.com [素材酷平台] [148.153.56.162]"
+    ],
+    [
+        "love.bilibili.com",
+        "https://love.bilibili.com [哔哩哔哩公益] [47.246.23.232]"
+    ],
+    [
+        "live.bilibili.com",
+        "https://live.bilibili.com [哔哩哔哩直播，二次元弹幕直播平台] [23.236.97.62]"
+    ],
+    [
+        "customerservice.bilibili.com",
+        "https://customerservice.bilibili.com [客服系统] [42.202.222.232]"
+    ],
+    [
+        "bilibili.com",
+        "https://bilibili.com [301 Moved Permanently] [47.103.24.173]"
+    ],
+    [
+        "grpc.bilibili.com",
+        ""
+    ],
+    [
+        "message.bilibili.com",
+        "https://message.bilibili.com [消息中心 - 哔哩哔哩弹幕视频网 - ( ゜- ゜)つロ 乾杯~ - bilibili] [148.153.46.90]"
+    ],
+    [
+        "app.bilibili.com",
+        "https://app.bilibili.com [哔哩哔哩下载中心] [23.236.97.62]"
+    ],
+    [
+        "quiz.bilibili.com",
+        "https://quiz.bilibili.com [502 Bad Gateway] [23.236.97.62]"
+    ],
+    [
+        "offline.bilibili.com",
+        "https://offline.bilibili.com [502 Bad Gateway] [148.153.64.18]"
+    ],
+    [
+        "mall.bilibili.com",
+        "https://mall.bilibili.com [会员购-bilibili正版衍生品&票务销售平台] [148.153.45.10]"
+    ],
+    [
+        "bigfun.bilibili.com",
+        "https://bigfun.bilibili.com [122.189.171.115]"
+    ],
+    [
+        "t.bilibili.com",
+        "https://t.bilibili.com [动态首页-哔哩哔哩] [148.153.56.163]"
+    ],
+    [
+        "cpcalendars.bilibili.com",
+        ""
+    ],
+    [
+        "vip.bilibili.com",
+        "https://vip.bilibili.com [302 Found] [148.153.56.162]"
+    ],
+    [
+        "comment.bilibili.com",
+        "https://comment.bilibili.com [301 Moved Permanently] [23.236.97.62]"
+    ],
+    [
+        "bbq.bilibili.com",
+        "https://bbq.bilibili.com [轻视频] [148.153.56.163]"
+    ],
+    [
+        "ct-bvpn.bilibili.com",
+        ""
+    ],
+    [
+        "sws.bilibili.com",
+        "https://sws.bilibili.com [MADE BY BILIBILI Contents] [139.180.138.149]"
+    ],
+    [
+        "livecmt-1.bilibili.com",
+        "https://livecmt-1.bilibili.com [47.94.96.17]"
+    ],
+    [
+        "comic.bilibili.com",
+        "https://comic.bilibili.com [302 Found] [117.23.60.13]"
+    ],
+    [
+        "pictures.bilibili.com",
+        "http://pictures.bilibili.com [Document] [101.33.20.98]"
+    ],
+    [
+        "b.bilibili.com",
+        "https://b.bilibili.com [bilibili品牌号] [23.236.97.62]"
+    ]
+]

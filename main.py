@@ -22,7 +22,7 @@ import Plugins.ResultToFile.result_to_file as result_to_file
 def get_subdomains(domain, mode='passive', dict_file=None):
     """
     :param domain: 要检查的域名
-    :param mode: 'passive' 或 'active' 或 'dict'，根据模式获取子域名。
+    :param mode: 'passive' 或 'dict'，根据模式获取子域名。
     :param dict_file: 字典文件路径（仅在字典扫描模式下使用）
     :return: 包含各个服务结果的字典
     """
@@ -41,7 +41,7 @@ def get_subdomains(domain, mode='passive', dict_file=None):
             futures[executor.submit(bevigil_api.get_subdomains, domain)] = 'bevigil_api'
             futures[executor.submit(threatbook.get_subdomains, domain)] = 'threatbook'  # 需要企业api账号
         
-        elif mode == 'dict':  # 工具字典扫描/主动扫描
+        elif mode == 'dict':  # 工具字典扫描+主动扫描
             if dict_file is None:
                 futures[executor.submit(dig.get_subdomains, domain)] = 'dig'
                 futures[executor.submit(site_map.get_subdomains, domain)] = 'site_map'
