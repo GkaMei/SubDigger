@@ -30,34 +30,29 @@ def get_subdomains(domain, mode='passive', dict_file=None):
         futures = {}
         
         if mode == 'passive':  # 被动扫描
-            services = {
-                'dig': dig.get_subdomains,
-                'dns_search': dns_search.get_subdomains,
-                'crt_sh': crt_sh.get_subdomains,
-                'chaziyu_com': chaziyu_com.get_subdomains,
-                'bing_search': bing_search.get_subdomains,
-                'google_search': google_search.get_subdomains,
-                'baidu_search': baidu_search.get_subdomains,
-                'site_map': site_map.get_subdomains,
-                'js_finder': js_finder.get_subdomains,
-                'quake': quake.get_subdomains,
-                'censys_api': censys_api.get_subdomains,
-                'bevigil_api': bevigil_api.get_subdomains,
-                'threatbook': threatbook.get_subdomains, #需要企业api账号
-            }
-            for name, func in services.items():
-                futures[executor.submit(func, domain)] = name
+            futures[executor.submit(dns_search.get_subdomains, domain)] = 'dns_search'
+            futures[executor.submit(crt_sh.get_subdomains, domain)] = 'crt_sh'
+            futures[executor.submit(chaziyu_com.get_subdomains, domain)] = 'chaziyu_com'
+            futures[executor.submit(bing_search.get_subdomains, domain)] = 'bing_search'
+            futures[executor.submit(google_search.get_subdomains, domain)] = 'google_search'
+            futures[executor.submit(baidu_search.get_subdomains, domain)] = 'baidu_search'
+            futures[executor.submit(quake.get_subdomains, domain)] = 'quake'
+            futures[executor.submit(censys_api.get_subdomains, domain)] = 'censys_api'
+            futures[executor.submit(bevigil_api.get_subdomains, domain)] = 'bevigil_api'
+            futures[executor.submit(threatbook.get_subdomains, domain)] = 'threatbook'  # 需要企业api账号
         
-        elif mode == 'dict':  # 工具字典扫描
+        elif mode == 'dict':  # 工具字典扫描/主动扫描
             if dict_file is None:
-                futures[executor.submit(ksubdomain.get_subdomains_dict, domain)] = 'ksubdomain_dict'
+                futures[executor.submit(dig.get_subdomains, domain)] = 'dig'
+                futures[executor.submit(site_map.get_subdomains, domain)] = 'site_map'
+                futures[executor.submit(js_finder.get_subdomains, domain)] = 'js_finder'
                 futures[executor.submit(ksubdomain.get_subdomains_tools, domain)] = 'tools'
+                futures[executor.submit(ksubdomain.get_subdomains_dict, domain)] = 'ksubdomain_dict'
             else:
-                # 确保参数顺序正确
                 futures[executor.submit(ksubdomain.get_subdomains_dict, dict_file, domain)] = 'ksubdomain_dict'
         
         else:
-            print("请选择一种扫描的方式 'passive' 或 'active' 或 'dict'")
+            print("请选择一种扫描的方式 'passive' 或 'dict'")
             return {}
 
         results = {}
