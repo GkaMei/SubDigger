@@ -3,6 +3,8 @@ import re
 import json
 
 def get_subdomains(domain):
+    print(f"chaziyu开始扫描域名: {domain}")  # 开始扫描的提示
+
     url = f'https://chaziyu.com/{domain}/'
 
     headers = {
@@ -22,7 +24,9 @@ def get_subdomains(domain):
     if response.status_code == 200:
         try:
             subdomains = re.findall(rf'\b(?:[a-zA-Z0-9-]+\.)*{re.escape(domain)}\b', response.text)
-            return list(subdomains)
+            unique_subdomains = list(set(subdomains))  # 去重
+            print(f"chaziyu扫描完成，找到 {len(unique_subdomains)} 个子域名.")  # 统计数量的提示
+            return unique_subdomains
         except Exception as e:
             return json.dumps({"error": f"解析错误: {e}"}, ensure_ascii=False, indent=4)
     else:

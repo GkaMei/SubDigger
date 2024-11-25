@@ -9,6 +9,8 @@ config.read('config.ini')
 bevigil_api_key = config['bevigil_api']['api_key']
 
 def get_subdomains(domain):
+    print(f"bevigil开始扫描: {domain}")  # 开始扫描的提示
+
     # 使用 f-string 格式化 URL
     url = f'http://osint.bevigil.com/api/{domain}/subdomains/'
     headers = {
@@ -22,6 +24,9 @@ def get_subdomains(domain):
         data = response.json()
         # 提取子域名列表
         subdomains = data.get('subdomains', [])
+        
+        print(f"bevigil扫描完成，找到 {len(subdomains)} 个子域名.")  # 统计数量的提示
+        
         return subdomains  # 返回子域名列表
     else:
         print('请求失败，状态码为:', response.status_code)

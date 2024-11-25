@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup
 import json
 
 def get_subdomains(domain):
+    print(f"crt.sh开始收集域名: {domain}")  # 开始扫描的提示
+
     url = f"https://crt.sh/?q=%.{domain}&output=json"
     response = requests.get(url)
     
     if response.status_code != 200:
-        print(f"Failed to retrieve data: {response.status_code}")
+        print(f"crt.sh Failed to retrieve data: {response.status_code}")
         return []
 
     try:
@@ -28,4 +30,7 @@ def get_subdomains(domain):
                 if name_value.endswith(domain):
                     subdomains.add(name_value.strip())
 
-    return list(subdomains)
+    unique_subdomains = list(subdomains)  # 转换为列表
+    print(f"crt.sh扫描完成，找到 {len(unique_subdomains)} 个子域名.")  # 统计数量的提示
+
+    return unique_subdomains

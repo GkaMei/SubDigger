@@ -6,6 +6,7 @@ import time
 import random
 
 def get_subdomains(domain):
+    print(f"百度开始扫描域名: {domain}")  # 开始扫描的提示
     subdomains = set()
     start = 0
     while True:
@@ -27,7 +28,10 @@ def get_subdomains(domain):
         except requests.RequestException as e:
             print(f"请求失败: {e}")
             break
-    return list(subdomains)
+
+    unique_subdomains = list(subdomains)  # 转换为列表
+    print(f"百度扫描完成，找到 {len(unique_subdomains)} 个子域名.")  # 统计数量的提示
+    return unique_subdomains
 
 def parse_results(html, domain):
     soup = BeautifulSoup(html, 'html.parser')

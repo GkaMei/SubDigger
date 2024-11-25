@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+import logging
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 
@@ -73,8 +74,10 @@ async def start_crawl(base_url: str, max_depth: int) -> set:
     return subdomains
 
 def get_subdomains(domain: str, max_depth: int = 3) -> list:
+    logging.info(f"site_map starting: {domain}")
     if not domain.startswith(('http://', 'https://')):
         domain = 'http://' + domain
 
     subdomains = asyncio.run(start_crawl(domain, max_depth))
+    logging.info(f"site_map found: {len(subdomains)}")
     return list(subdomains)

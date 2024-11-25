@@ -17,8 +17,10 @@ def get_subdomains(domain):
     data = {
         "query": f"domain:{domain}",
         "start": 0,
-        "size": 100  # 增加返回的结果数量
+        "size": 60  # 增加返回的结果数量
     }
+
+    print(f"360开始扫描: {domain}")
 
     response = requests.post(url="https://quake.360.net/api/v3/search/quake_service", headers=headers, json=data)
     
@@ -29,4 +31,8 @@ def get_subdomains(domain):
     # 组合成完整的域名
     full_domains = [f"{sub}.{domain}" for sub in subdomains]
 
-    return list(set(full_domains))  # 去重并返回
+    unique_domains = list(set(full_domains))  # 去重并返回
+
+    print(f"360扫描完成，找到 {len(unique_domains)} 个子域名.")  # 统计数量的提示
+
+    return unique_domains

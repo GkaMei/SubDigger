@@ -10,7 +10,7 @@
 
 - **被动扫描**：通过分析公共数据源，快速收集目标域名的子域名信息，无需直接与目标交互。
 - **主动扫描**：通过查询 DNS 记录、js、爬虫，获取更全面的子域名信息。
-- **字典爆破**：使用内置字典或自定义字典进行子域名爆破，发现隐藏的子域名。
+- **字典爆破**：使用自定义字典进行子域名爆破，发现隐藏的子域名。
 
 ### 使用方式
 
@@ -21,10 +21,10 @@
 python3 main.py -passive example.com 
 
 # 使用自带字典扫描以及主动扫描
-python3 main.py -dict example.com 
+python3 main.py -active example.com 
 
 # 使用自定义字典进行扫描
-python3 main.py -dict /path/subdomain.txt example.com 
+sudo python3 main.py -dict example.com /path/subdomain.txt
 ```
 
 ### 注意事项
@@ -47,7 +47,7 @@ python3 main.py -dict /path/subdomain.txt example.com
 2. **DNS 查询收集**：通过查询 SRV 记录及其他 DNS 记录（MX, NS, SOA, TXT）收集子域。
 3. **证书透明度收集**：支持 `crtsh`、`censys_api`。
 4. **DNS 数据集收集**：支持 `bevigil_api`、`chaziyu` 等。
-5. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360` 模块。
+5. **威胁情报平台数据收集**：支持 `threatbook_api`、`quake.360`、`VT` 模块。
 6. **搜索引擎发现子域**：支持 `bing`、`google`、`baidu` 全量搜索。
 
 ### 强大的主动收集能力

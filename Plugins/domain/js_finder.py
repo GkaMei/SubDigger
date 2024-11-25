@@ -3,6 +3,7 @@ import re
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import urllib3
+import logging
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -118,8 +119,10 @@ def find_by_url(url):
 
 # 获取子域名列表
 def get_subdomains(url):
+    logging.info(f"js_finder starting: {url}")
     urls = find_by_url(url)
     if urls is None:
         return None
     subdomains = find_subdomain(urls, url)
+    logging.info(f"js_finder found: {len(subdomains)}")
     return list(subdomains)

@@ -1,5 +1,6 @@
 import os
 import asyncio
+import logging
 
 # 使用环境变量或默认路径设置工具目录
 TOOLS_DIR = os.getenv('TOOLS_DIR', os.path.abspath("tools"))
@@ -62,7 +63,6 @@ async def process_domains(result, domain):
             print(f"处理域名时发生错误: {result}")
         else:
             processed_results.append(result)
-
     return processed_results
 
 def run_process_domains(result, domain):

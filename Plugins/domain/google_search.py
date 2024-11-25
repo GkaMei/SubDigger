@@ -6,6 +6,7 @@ import time
 import random
 
 def get_subdomains(domain):
+    print(f"google开始扫描域名: {domain}")  # 开始扫描的提示
     subdomains = set()  # 使用集合来存储不重复的子域名
     start = 0  # 从第一页开始
     while True:
@@ -29,7 +30,10 @@ def get_subdomains(domain):
         except requests.RequestException as e:
             print(f"请求失败: {e}")
             break
-    return list(subdomains)
+
+    unique_subdomains = list(subdomains)  # 转换为列表
+    print(f"google扫描完成，找到 {len(unique_subdomains)} 个子域名.")  # 统计数量的提示
+    return unique_subdomains
 
 def parse_results(html, domain):
     soup = BeautifulSoup(html, 'html.parser')

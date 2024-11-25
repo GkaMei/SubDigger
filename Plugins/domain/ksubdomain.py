@@ -6,10 +6,14 @@ import logging
 from typing import List, Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 设置日志记录
+# 配置日志
 logging.basicConfig(level=logging.INFO)
 
 TOOLS_DIR = os.path.abspath("tools")
+
+def is_root_user():
+    """检查是否是 root 用户运行"""
+    return os.geteuid() == 0
 
 def execute_command(command: List[str]) -> Optional[str]:
     try:
@@ -64,11 +68,12 @@ def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[st
     :param dict_file: 字典文件路径，如果为 None 则使用默认字典
     :return: 子域名列表
     """
+    # 检查 root 权限
+    if not is_root_user():
+        logging.error("root or sudo try again")
+        exit(1)
     
-    if dict_file is None:
-        logging.info(f"开始运行内置字典扫描: {domain}")
-        dict_file = os.path.join(TOOLS_DIR, "passwd", "Subdomain.txt")
-    
+    logging.info(f"使用{dict_file}字典扫描")
     ksubdomain_command = [
         os.path.join(TOOLS_DIR, 'ksubdomain', 'ksubdomain'),
         '-d', domain,
@@ -78,5 +83,4 @@ def get_subdomains_dict(domain: str, dict_file: Optional[str] = None) -> List[st
     
     output = execute_command(ksubdomain_command)    
     ksubdomain_output = extract_useful_info(output)
-
     return list(ksubdomain_output)

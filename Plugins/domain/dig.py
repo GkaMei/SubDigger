@@ -1,5 +1,6 @@
 import subprocess
 import dns.resolver
+import logging
 
 def get_ns_records(domain):
     """
@@ -43,6 +44,7 @@ def get_subdomains(domain):
     """
     获取目标域名的子域名并返回子域名列表
     """
+    logging.info(f"dig starting: {domain}")
     try:
         ns_servers = get_ns_records(domain)
         if not ns_servers:
@@ -56,7 +58,7 @@ def get_subdomains(domain):
                 all_subdomains.update(subdomains)
 
         if not all_subdomains:
-            print("该域名不存在域传送漏洞")
+            logging.info(f"dig: {domain}不存在域传送漏洞")
 
         return list(all_subdomains)
     except Exception as e:

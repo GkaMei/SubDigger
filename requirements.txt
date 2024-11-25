@@ -1,8 +1,9 @@
 aiodns
+aiohttp
+censys
 asyncio
 beautifulsoup4
-dns
-json
+dnspython
 logging
 requests
 requests_html
